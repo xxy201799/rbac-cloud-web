@@ -41,7 +41,7 @@
                       placeholder="验证码"
                       v-model="user.code">
                       <template slot="suffix">
-                        <img class="code-img" @click="changeRandomStr" :src="'http://129.211.159.145:9999/code?randomStr=' + user.randomStr" alt="">
+                        <img class="code-img" @click="changeRandomStr" :src="'http://106.12.151.78:9999/code?randomStr=' + user.randomStr" alt="">
                       </template>
                     </el-input>
                   </el-form-item>
@@ -90,7 +90,7 @@ export default {
         username: 'admin',
         password: '123456:no_check',
         code: '',
-        randomStr: Math.floor(Math.random() * 1000)
+        randomStr: Math.floor(Math.random() * 9000) + 1000
       },
       img: ''
     }

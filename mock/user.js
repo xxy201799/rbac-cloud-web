@@ -26,8 +26,8 @@ const users = {
 export default [
   // user login
   {
-    url: '/mock/user/login',
-    type: 'post',
+    url: '/auth/oauth/token',
+    type: 'get',
     response: config => {
       const { username } = config.body
       const token = tokens[username]
@@ -72,11 +72,11 @@ export default [
 
   // user logout
   {
-    url: '/mock/user/logout',
-    type: 'post',
+    url: '/mock/auth/oauth/logout',
+    type: 'delete',
     response: _ => {
       return {
-        code: 20000,
+        code: 1,
         data: 'success'
       }
     }

@@ -27,7 +27,7 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'mock',
   productionSourceMap: false,
   devServer: {
     port: port,
@@ -39,8 +39,15 @@ module.exports = {
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
+      '/mock-api': {
+        target: `http://127.0.0.1:${port}`,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: 'mock'
+        }
+      },
       '/dev-api': {
-        target: `http://129.211.159.145:9999`,
+        target: `http://106.12.151.78:9999`,
         ws: true,
         changeOrigin: true,
         pathRewrite: {
@@ -48,7 +55,7 @@ module.exports = {
         }
       },
       '/prod-api': {
-        target: `http://129.211.159.145:9999`,
+        target: `http://106.12.151.78:9999`,
         ws: true,
         changeOrigin: true,
         pathRewrite: {

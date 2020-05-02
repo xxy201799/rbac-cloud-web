@@ -20,7 +20,7 @@ export function getInfo(token) {
 
 export function logout() {
   return request({
-    url: '/mock/user/logout',
-    method: 'post'
+    url: '/mock/auth/oauth/logout',
+    method: 'delete'
   })
 }
