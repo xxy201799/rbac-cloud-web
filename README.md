@@ -17,3 +17,6 @@
     |- views
 |- tests
 ```
+
+使用mock环境，npm run mock
+开发环境，npm run dev

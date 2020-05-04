@@ -11,16 +11,25 @@ export function login(params) {
   })
 }
 
+/**
+ * 用户登陆信息
+ */
 export function getInfo(token) {
   return request({
-    url: '/code?randomStr=1234',
-    method: 'get'
+    url: '/admin/user/info',
+    method: 'get',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   })
 }
 
-export function logout() {
+export function logout(token) {
   return request({
-    url: '/mock/user/logout',
-    method: 'post'
+    url: '/auth/oauth/logout',
+    method: 'delete',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   })
 }

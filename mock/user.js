@@ -26,23 +26,22 @@ const users = {
 export default [
   // user login
   {
-    url: '/mock/user/login',
-    type: 'post',
+    url: '/auth/oauth/token',
+    type: 'get',
     response: config => {
       const { username } = config.body
       const token = tokens[username]
 
-      // mock error
-      if (!token) {
-        return {
-          code: 60204,
-          message: 'Account and password are incorrect.'
-        }
-      }
-
       return {
-        code: 20000,
-        data: token
+        access_token: token,
+        refresh_token: token,
+        token_type: 1,
+        expires_in: '',
+        scope: '',
+        license: '',
+        dept_id: '',
+        user_id: '',
+        username: ''
       }
     }
   },
@@ -72,11 +71,11 @@ export default [
 
   // user logout
   {
-    url: '/mock/user/logout',
-    type: 'post',
+    url: '/mock/auth/oauth/logout',
+    type: 'delete',
     response: _ => {
       return {
-        code: 20000,
+        code: 1,
         data: 'success'
       }
     }
