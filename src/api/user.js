@@ -13,7 +13,6 @@ export function login(params) {
 
 /**
  * 用户登陆信息
- * todo Authorization，请求头需要修改
  */
 export function getInfo(token) {
   return request({
@@ -25,9 +24,12 @@ export function getInfo(token) {
   })
 }
 
-export function logout() {
+export function logout(token) {
   return request({
     url: '/auth/oauth/logout',
-    method: 'delete'
+    method: 'delete',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   })
 }
