@@ -32,17 +32,16 @@ export default [
       const { username } = config.body
       const token = tokens[username]
 
-      // mock error
-      if (!token) {
-        return {
-          code: 60204,
-          message: 'Account and password are incorrect.'
-        }
-      }
-
       return {
-        code: 20000,
-        data: token
+        access_token: token,
+        refresh_token: token,
+        token_type: 1,
+        expires_in: '',
+        scope: '',
+        license: '',
+        dept_id: '',
+        user_id: '',
+        username: ''
       }
     }
   },

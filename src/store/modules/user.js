@@ -43,41 +43,37 @@ const actions = {
   },
 
   // get user info
-  // getInfo({ commit, state }) {
-  //   return new Promise((resolve, reject) => {
-  //     getInfo(state.token).then(response => {
-  //       const { data } = response
-  //
-  //       if (!data) {
-  //         reject('Verification failed, please Login again.')
-  //       }
-  //
-  //       const { name, avatar } = data
-  //
-  //       commit('SET_NAME', name)
-  //       commit('SET_AVATAR', avatar)
-  //       resolve(data)
-  //     }).catch(error => {
-  //       reject(error)
-  //     })
-  //   })
-  // },
+  getInfo({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getInfo(state.token).then(response => {
+        const { data } = response
+
+        if (!data) {
+          reject('Verification failed, please Login again.')
+        }
+
+        const { username, avatar } = data.sysUser
+
+        commit('SET_NAME', username)
+        commit('SET_AVATAR', avatar)
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
 
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      removeToken() // must remove  token  first
-      resetRouter()
-      commit('RESET_STATE')
-      resolve()
-      // logout(state.token).then(() => {
-      //   removeToken() // must remove  token  first
-      //   resetRouter()
-      //   commit('RESET_STATE')
-      //   resolve()
-      // }).catch(error => {
-      //   reject(error)
-      // })
+      logout().then(() => {
+        removeToken() // must remove  token  first
+        resetRouter()
+        commit('RESET_STATE')
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
 

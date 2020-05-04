@@ -11,16 +11,23 @@ export function login(params) {
   })
 }
 
+/**
+ * 用户登陆信息
+ * todo Authorization，请求头需要修改
+ */
 export function getInfo(token) {
   return request({
-    url: '/code?randomStr=1234',
-    method: 'get'
+    url: '/admin/user/info',
+    method: 'get',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   })
 }
 
 export function logout() {
   return request({
-    url: '/mock/auth/oauth/logout',
+    url: '/auth/oauth/logout',
     method: 'delete'
   })
 }
