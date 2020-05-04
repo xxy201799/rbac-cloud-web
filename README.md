@@ -20,3 +20,6 @@
 
 使用mock环境，npm run mock
 开发环境，npm run dev
+
+#### 分支管理
+自己从master上拉去代码建立自己的分支开发，开发测试完成合并到master上发布
