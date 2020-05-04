@@ -57,12 +57,22 @@ export const constantRoutes = [
   {
     path: '/permission',
     component: Layout,
+    name: 'permission',
+    meta: { title: '权限管理', icon: 'user' },
+    redirect: '/permission/page',
+    alwaysShow: true, // will always show the root menu
     children: [
       {
-        path: 'index',
-        name: 'permission',
-        // component: () => import('@/views/table/index'),
-        meta: { title: '权限管理', icon: 'user' }
+        path: 'page',
+        name: 'PagePermission',
+        // component: () => import('@/views/permission/dictionary/index'),
+        meta: { title: '管理首页' }
+      },
+      {
+        path: 'dict',
+        name: 'dictionary',
+        component: () => import('@/views/permission/dictionary/index'),
+        meta: { title: '字典管理' }
       }
     ]
   },
