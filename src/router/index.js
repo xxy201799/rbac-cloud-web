@@ -63,10 +63,10 @@ export const constantRoutes = [
     alwaysShow: true, // will always show the root menu
     children: [
       {
-        path: 'page',
-        name: 'PagePermission',
-        // component: () => import('@/views/permission/dictionary/index'),
-        meta: { title: '管理首页' }
+        path: 'user',
+        name: 'userManage',
+        component: () => import('@/views/permission/userManage/index'),
+        meta: { title: '用户管理' }
       },
       {
         path: 'dict',
