@@ -12,6 +12,15 @@
           :label="item.name">
         </el-table-column>
       </template>
+      <el-table-column
+        fixed="right"
+        label="操作"
+        width="100">
+        <template slot-scope="scope">
+          <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="handleEdit(scope.row)"  type="text" size="small">修改</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <Pagination v-if="isPagination" :total="total" :page.sync="page" :limit.sync="limit" @pagination="handlePaginationChange" />
   </div>
@@ -56,6 +65,12 @@ export default {
   methods: {
     handlePaginationChange() {
       this.$emit('pagination')
+    },
+    handleClick(data) {
+      this.$emit('deleteRow', data)
+    },
+    handleEdit(data) {
+      this.$emit('editRow', data)
     }
   }
 }

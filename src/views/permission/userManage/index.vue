@@ -1,11 +1,12 @@
 <template>
   <div class="page-padding">
-    <Table :table-title="tableTitle" :table-data="userList" :is-pagination="true" />
+    <Table :table-title="tableTitle" :table-data="userList" :is-pagination="true" :total="total" @deleteRow="deleteRow" />
   </div>
 </template>
 <script>
 import Table from '@/components/Table'
 import { getList } from '@/api/permission/user-manage'
+import { parseTime } from '@/utils/index.js'
 
 export default {
   name: 'UserManage',
@@ -27,7 +28,8 @@ export default {
       ],
       userList: [],
       page: 1,
-      limit: 20
+      limit: 20,
+      total: 0
     }
   },
   created() {
@@ -35,7 +37,36 @@ export default {
   },
   methods: {
     getUserList() {
-      getList({ current: this.page, size: this.limit })
+      getList({ current: this.page, size: this.limit }).then(res => {
+        this.total = res.data.total
+        if (res.data && res.data.records) {
+          res.data.records.forEach(item => {
+            item.createTime = parseTime(new Date(item.createTime))
+            item.updateTime = parseTime(new Date(item.updateTime))
+            item.lockFlag = item.lockFlag == 0 ? '否' : '是'
+          })
+        }
+        this.userList = res.data.records
+      })
+    },
+    // 用户删除
+    deleteRow(data) {
+      console.log(data)
+      this.$confirm('确认要删除吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }

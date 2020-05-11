@@ -8,7 +8,7 @@ const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // baseURL: 'http://106.12.151.78:9999', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 30000 // request timeout
 })
 
 // request interceptor
@@ -25,7 +25,6 @@ service.interceptors.request.use(
   },
   error => {
     // do something with request error
-    console.log(error) // for debug
     return Promise.reject(error)
   }
 )
@@ -52,16 +51,33 @@ service.interceptors.response.use(
       })
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
-      return res
+      if (res && res.code !== undefined && res.code !== 0) {
+        Message({
+          message: res.msg || 'Error',
+          type: 'error',
+          duration: 5 * 1000
+        })
+        return Promise.reject(new Error(res.message || 'Error'))
+      } else {
+        return res
+      }
     }
   },
   error => {
-    console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    if (error.response.status === 428) {
+      Message({
+        message: error.response.data.msg,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    } else {
+      Message({
+        message: error.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
+
     return Promise.reject(error)
   }
 )
